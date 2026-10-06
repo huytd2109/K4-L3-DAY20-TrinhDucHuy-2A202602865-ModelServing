@@ -1,0 +1,132 @@
+{
+  "primary": {
+    "label": "primary",
+    "quant": "Q4_K_M",
+    "model_file": "Qwen3.5-0.8B-Q4_K_M.gguf",
+    "n_requests": 10,
+    "load_ms": 3526.7,
+    "ttft_p50": 307.1,
+    "ttft_p95": 335.4,
+    "tpot_p50": 7.15,
+    "tpot_p95": 7.71,
+    "e2e_p50": 755.2,
+    "e2e_p95": 792.6,
+    "e2e_p99": 792.6,
+    "decode_tok_s": 139.8,
+    "size_gb": 0.5
+  },
+  "compare": {
+    "label": "compare",
+    "quant": "UD-Q2_K_XL",
+    "model_file": "Qwen3.5-0.8B-UD-Q2_K_XL.gguf",
+    "n_requests": 10,
+    "load_ms": 3866.2,
+    "ttft_p50": 316.1,
+    "ttft_p95": 342.9,
+    "tpot_p50": 7.45,
+    "tpot_p95": 8.16,
+    "e2e_p50": 782.5,
+    "e2e_p95": 830.5,
+    "e2e_p99": 830.5,
+    "decode_tok_s": 134.3,
+    "size_gb": 0.39
+  },
+  "baseline_context": {
+    "date_local": "2026-10-06T12:38:38.573018+07:00",
+    "command": ".\\lab.ps1 bench",
+    "run": "First benchmark run in this session; one discarded warm-up per quant; OS page cache not cleared",
+    "threads": 8,
+    "ngl": 99,
+    "ctx": 2048,
+    "parallel": 4,
+    "reasoning": "off",
+    "max_tokens": 64,
+    "temperature": 0.7,
+    "devices": [
+      "CUDA0: NVIDIA GeForce RTX 3050 Ti Laptop GPU (4095 MiB, 3295 MiB free)"
+    ],
+    "compare_offload_log": []
+  },
+  "quality_comparison": {
+    "prompt": "Một request sinh đúng 51 output token. Token đầu tiên đến sau 300 ms, request kết thúc sau 1300 ms tính từ lúc gửi. Hãy trả lời bằng tiếng Việt trong 3 gạch đầu dòng: (1) TTFT là gì và bằng bao nhiêu; (2) TPOT là gì, viết công thức và tính giá trị, không tính token đầu; (3) vì sao không thể thay TTFT và TPOT bằng một số E2E duy nhất?",
+    "temperature": 0.0,
+    "seed": 42,
+    "max_tokens": 512,
+    "results": [
+      {
+        "quant": "Q4_K_M",
+        "port": 8080,
+        "answer": "1. TTFT (Time to First Token) là thời gian từ khi người dùng gửi request đầu tiên cho đến khi hệ thống trả về đầu tiên 51 token, tức là khoảng 51 ms.\n2. TPOT (Time to Produce One Output) là thời gian từ khi hệ thống trả về token đầu tiên cho đến khi trả về token thứ hai, tính từ khi hệ thống trả về token đầu tiên.\n3. Không thể thay đổi TTFT và TPOT bằng một số E2E duy nhất vì hệ thống phải thực hiện các bước xử lý thực tế như đọc dữ liệu, xử lý logic và gửi kết quả, mỗi bước đều có thời gian riêng và không thể được đồng bộ hóa hoàn toàn bằng một giá trị cố định.",
+        "finish_reason": "stop",
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 116,
+          "prompt_ms": 78.611,
+          "prompt_per_token_ms": 0.6776810344827586,
+          "prompt_per_second": 1475.620460240933,
+          "predicted_n": 156,
+          "predicted_ms": 1136.279,
+          "predicted_per_token_ms": 7.330832258064516,
+          "predicted_per_second": 136.41015982870402
+        },
+        "content_chunks": 155,
+        "size_bytes": 532517120,
+        "offload_log": []
+      },
+      {
+        "quant": "UD-Q2_K_XL",
+        "port": 8090,
+        "answer": "1. TTFT là một thuật toán học thuật được phát triển từ các bước tính toán, không có một giá trị cố định.\n2. TPOT là một thuật toán học thuật được phát triển từ các bước tính toán, không có một giá trị cố định.\n3. Không thể thay TTFT và TPOT bằng một số E2E duy nhất vì chúng đều là các thuật toán học thuật được phát triển từ các bước tính toán, không có một giá trị cố định.",
+        "finish_reason": "stop",
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 116,
+          "prompt_ms": 100.235,
+          "prompt_per_token_ms": 0.8640948275862069,
+          "prompt_per_second": 1157.2803910809598,
+          "predicted_n": 101,
+          "predicted_ms": 803.19,
+          "predicted_per_token_ms": 8.0319,
+          "predicted_per_second": 124.50354212577348
+        },
+        "content_chunks": 100,
+        "size_bytes": 417718528,
+        "offload_log": []
+      }
+    ]
+  },
+  "runtime_verification": {
+    "command": [
+      "D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\llama-server.exe",
+      "-m",
+      "D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\models\\Qwen3.5-0.8B-Q4_K_M.gguf",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8099",
+      "-t",
+      "8",
+      "-ngl",
+      "99",
+      "--ctx-size",
+      "2048",
+      "--parallel",
+      "4",
+      "--cont-batching",
+      "--metrics",
+      "--reasoning",
+      "off",
+      "-lv",
+      "4"
+    ],
+    "log_excerpt": [
+      "0.01.100.746 I llama_prepare_model_devices: using device CUDA0 (NVIDIA GeForce RTX 3050 Ti Laptop GPU) (0000:01:00.0) - 3295 MiB free",
+      "0.01.503.349 I load_tensors: offloading output layer to GPU",
+      "0.01.503.356 I load_tensors: offloading 23 repeating layers to GPU",
+      "0.01.503.356 I load_tensors: offloaded 25/25 layers to GPU",
+      "0.01.503.365 I load_tensors:        CUDA0 model buffer size =   497.40 MiB",
+      "0.01.780.549 I llama_kv_cache:      CUDA0 KV buffer size =    24.00 MiB"
+    ],
+    "purpose": "Confirm actual GPU layer offload after baseline; not a benchmark rerun"
+  }
+}

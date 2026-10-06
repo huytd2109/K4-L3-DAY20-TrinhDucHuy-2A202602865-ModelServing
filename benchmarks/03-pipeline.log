@@ -1,0 +1,39 @@
+
+────────────────────────────────────────────────────────────────
+  03 - RAG pipeline
+────────────────────────────────────────────────────────────────
+  llama-server : http://localhost:8080
+  embeddings   : none (keyword overlap fallback)
+
+=== Why is goodput more useful than raw throughput?
+  contexts : [('goodput', 1.0), ('paged', 0.0), ('radix', 0.0)]
+  timings  : {'embed': 0.0, 'retrieve': 0.3, 'llm': 19030.3, 'total': 19030.8}
+  server   : prefill 151 tok / 548 ms, decode 190 tok / 15096 ms
+  answer   : Based on the provided context, **Goodput** is more useful than raw throughput because it focuses on **SLOs (Service Level Objectives)** rather than ignoring them.
+
+Here is the breakdown of the reasoning:
+
+*   **Goodput** counts requests per second (RPS) that met the **TTFT** (Tot
+
+=== What problem does PagedAttention actually solve?
+  contexts : [('paged', 1.0), ('radix', 0.0), ('disagg', 0.0)]
+  timings  : {'embed': 0.0, 'retrieve': 0.1, 'llm': 11861.2, 'total': 11861.3}
+  server   : prefill 114 tok / 439 ms, decode 115 tok / 9044 ms
+  answer   : PagedAttention solves the problem of **internal fragmentation in GPU memory** caused by storing the Key-Value (KV) cache in non-contiguous pages.
+
+By organizing the KV cache into separate pages, the model avoids the wasted space that would occur if all KV entries were packed into
+
+=== When does splitting prefill and decode help?
+  contexts : [('disagg', 2.0), ('radix', 1.0), ('batching', 1.0)]
+  timings  : {'embed': 0.0, 'retrieve': 0.1, 'llm': 11439.9, 'total': 11440.0}
+  server   : prefill 113 tok / 423 ms, decode 110 tok / 8638 ms
+  answer   : Splitting prefill and decode helps when the **prefill operation is compute-bound** and the **decode operation is memory-bound**.
+
+In this scenario, the system utilizes **disaggregated serving splits** to separate the two phases:
+*   **Prefill** (computational work) is split onto 
+
+  Mean over 3 queries (ms): {'embed': 0.0, 'retrieve': 0.2, 'llm': 14110.5, 'total': 14110.7}
+  Dominant stage: llm (100% of total)
+
+==> Wrote benchmarks\03-integration-results.md
+  Put these numbers in REFLECTION.md section 4 as well.

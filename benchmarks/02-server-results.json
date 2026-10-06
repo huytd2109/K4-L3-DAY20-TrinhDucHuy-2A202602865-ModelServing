@@ -1,0 +1,96 @@
+{
+  "slots": 4,
+  "runs": [
+    {
+      "users": 10,
+      "requests": 23,
+      "failures": 0,
+      "fail_pct": 0.0,
+      "rps": 0.39199609005922065,
+      "avg_ms": 21192.49654782613,
+      "p50_ms": 22000.0,
+      "p95_ms": 27000.0,
+      "p99_ms": 34000.0,
+      "max_ms": 33802.90779999996
+    },
+    {
+      "users": 50,
+      "requests": 20,
+      "failures": 0,
+      "fail_pct": 0.0,
+      "rps": 0.3360800517673202,
+      "avg_ms": 33863.32192999998,
+      "p50_ms": 35000.0,
+      "p95_ms": 59000.0,
+      "p99_ms": 59000.0,
+      "max_ms": 59482.85670000041
+    }
+  ],
+  "evidence_context": {
+    "csvs": {
+      "locust-10_stats.csv": "b75df3656c52a12128cd618d0ae88d232465c97c469e0d6731436ee266f919f8",
+      "locust-50_stats.csv": "581649fa76677946740eeea58044f64589077f34ebeac66b8d53bdf93c2acd9a"
+    },
+    "selected_u50_run": "Second run from CP4; final CSV exported from runtime counters at shutdown; matches terminal output",
+    "metrics_source": "02-server-metrics-u50.csv",
+    "model": "Qwen3.5 0.8B Q4_K_M",
+    "parallel": 4,
+    "ngl": 99,
+    "threads": 8,
+    "ctx": 2048
+  },
+  "goodput_slo": {
+    "latency_threshold_ms": 30000,
+    "definition": "P95 <= 30000 ms for completed HTTP requests; goodput counts requests with E2E <= 30000 ms",
+    "method": "Bounds from Locust percentile order statistics and response-time rounding; intersect aggregate bounds with sum of short/long-rag bounds. No per-request histogram exported.",
+    "completion_only": true,
+    "runs": {
+      "10": {
+        "completed_requests": 23,
+        "eligible_count_min": 22,
+        "eligible_count_max": 22,
+        "eligible_fraction_min": 0.9565217391304348,
+        "eligible_fraction_max": 0.9565217391304348,
+        "goodput_rps_min": 0.37495278179577624,
+        "goodput_rps_max": 0.37495278179577624,
+        "group_count_bounds": {
+          "long-rag": [
+            4,
+            4
+          ],
+          "short": [
+            18,
+            18
+          ]
+        },
+        "p95_slo_met": true
+      },
+      "50": {
+        "completed_requests": 20,
+        "eligible_count_min": 4,
+        "eligible_count_max": 10,
+        "eligible_fraction_min": 0.2,
+        "eligible_fraction_max": 0.5,
+        "goodput_rps_min": 0.06721601035346404,
+        "goodput_rps_max": 0.1680400258836601,
+        "group_count_bounds": {
+          "long-rag": [
+            3,
+            3
+          ],
+          "short": [
+            1,
+            7
+          ]
+        },
+        "p95_slo_met": false
+      }
+    }
+  },
+  "next_experiment": {
+    "status": "proposed, not executed",
+    "primary_knob": "LAB_PARALLEL=8",
+    "companion_setting": "LAB_N_CTX=4096 to preserve 512 tokens/slot",
+    "success_criterion": "Goodput at E2E<=30s increases, P95 decreases, failures do not increase"
+  }
+}

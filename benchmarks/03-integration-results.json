@@ -1,0 +1,187 @@
+{
+  "backend": "keyword overlap",
+  "mean_ms": {
+    "embed": 0.0,
+    "retrieve": 0.2,
+    "llm": 14110.5,
+    "total": 14110.7
+  },
+  "results": [
+    {
+      "query": "Why is goodput more useful than raw throughput?",
+      "answer": "Based on the provided context, **Goodput** is more useful than raw throughput because it focuses on **SLOs (Service Level Objectives)** rather than ignoring them.\n\nHere is the breakdown of the reasoning:\n\n*   **Goodput** counts requests per second (RPS) that met the **TTFT** (Total Time to Failure) and **TPOT** (Total Time to Occupancy) targets.\n*   **Raw throughput** ignores SLOs entirely.\n*   **PagedAttention** removes internal fragmentation to increase memory efficiency, but this is a memory optimization, not a throughput metric.\n*   **RadixAttention** optimizes key caching for speed.\n\nTherefore, Goodput is superior because it actively monitors and respects the SLOs (Time to Failure and Time to Occupancy) defined by the system, whereas raw throughput is a passive metric that fails to account for these constraints.",
+      "contexts": [
+        {
+          "id": "goodput",
+          "score": 1.0,
+          "text": "Goodput@SLO counts only the requests per second that met the TTFT and TPOT targets. Throughput at saturation ignores SLOs."
+        },
+        {
+          "id": "paged",
+          "score": 0.0,
+          "text": "PagedAttention stores the KV cache in non-contiguous pages, removing the internal fragmentation that wasted most GPU memory."
+        },
+        {
+          "id": "radix",
+          "score": 0.0,
+          "text": "RadixAttention keys cached KV by token prefix in a trie, so a shared prefix lets the engine skip prefill entirely."
+        }
+      ],
+      "embed_backend": "keyword overlap",
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 0.3,
+        "llm": 19030.3,
+        "total": 19030.8
+      },
+      "server_timings": {
+        "prompt_n": 151,
+        "prompt_ms": 547.568,
+        "predicted_n": 190,
+        "predicted_ms": 15095.993
+      }
+    },
+    {
+      "query": "What problem does PagedAttention actually solve?",
+      "answer": "PagedAttention solves the problem of **internal fragmentation in GPU memory** caused by storing the Key-Value (KV) cache in non-contiguous pages.\n\nBy organizing the KV cache into separate pages, the model avoids the wasted space that would occur if all KV entries were packed into a single contiguous block of memory. This optimization is particularly beneficial on GPUs where memory bandwidth and latency are critical, as it allows the engine to utilize more of the available GPU memory for other tasks (like decoding) while keeping the KV cache in a more efficient, non-contiguous layout.",
+      "contexts": [
+        {
+          "id": "paged",
+          "score": 1.0,
+          "text": "PagedAttention stores the KV cache in non-contiguous pages, removing the internal fragmentation that wasted most GPU memory."
+        },
+        {
+          "id": "radix",
+          "score": 0.0,
+          "text": "RadixAttention keys cached KV by token prefix in a trie, so a shared prefix lets the engine skip prefill entirely."
+        },
+        {
+          "id": "disagg",
+          "score": 0.0,
+          "text": "Disaggregated serving splits prefill and decode onto separate pools because prefill is compute-bound and decode is memory-bandwidth-bound."
+        }
+      ],
+      "embed_backend": "keyword overlap",
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 0.1,
+        "llm": 11861.2,
+        "total": 11861.3
+      },
+      "server_timings": {
+        "prompt_n": 114,
+        "prompt_ms": 438.971,
+        "predicted_n": 115,
+        "predicted_ms": 9044.13
+      }
+    },
+    {
+      "query": "When does splitting prefill and decode help?",
+      "answer": "Splitting prefill and decode helps when the **prefill operation is compute-bound** and the **decode operation is memory-bound**.\n\nIn this scenario, the system utilizes **disaggregated serving splits** to separate the two phases:\n*   **Prefill** (computational work) is split onto separate pools.\n*   **Decode** (memory bandwidth work) is split onto separate pools.\n\nThis separation allows the engine to skip the prefill entirely if a shared prefix is detected in the keys, effectively reducing compute load.",
+      "contexts": [
+        {
+          "id": "disagg",
+          "score": 2.0,
+          "text": "Disaggregated serving splits prefill and decode onto separate pools because prefill is compute-bound and decode is memory-bandwidth-bound."
+        },
+        {
+          "id": "radix",
+          "score": 1.0,
+          "text": "RadixAttention keys cached KV by token prefix in a trie, so a shared prefix lets the engine skip prefill entirely."
+        },
+        {
+          "id": "batching",
+          "score": 1.0,
+          "text": "Continuous batching lets requests join and leave the running batch each decode step instead of waiting for a full batch."
+        }
+      ],
+      "embed_backend": "keyword overlap",
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 0.1,
+        "llm": 11439.9,
+        "total": 11440.0
+      },
+      "server_timings": {
+        "prompt_n": 113,
+        "prompt_ms": 422.944,
+        "predicted_n": 110,
+        "predicted_ms": 8637.773
+      }
+    }
+  ],
+  "evidence_context": {
+    "command": ".\\lab.ps1 pipeline",
+    "started_at": "2026-10-06T15:29:39.1631145+07:00",
+    "finished_at": "2026-10-06T15:30:22.2964202+07:00",
+    "base_url": "http://localhost:8080",
+    "model": "Qwen3.5-0.8B-Q4_K_M.gguf",
+    "threads": 8,
+    "ngl": 99,
+    "parallel": 4,
+    "ctx": 2048,
+    "reasoning": "off",
+    "embed_url": null,
+    "k": 3,
+    "max_tokens": 200,
+    "temperature": 0.3,
+    "metrics_before": {
+      "llamacpp:prompt_tokens_total": 2824.0,
+      "llamacpp:tokens_predicted_total": 4832.0,
+      "llamacpp:n_decode_total": 1239.0,
+      "llamacpp:requests_processing": 0.0,
+      "llamacpp:requests_deferred": 0.0
+    },
+    "metrics_after": {
+      "llamacpp:prompt_tokens_total": 3202.0,
+      "llamacpp:tokens_predicted_total": 5247.0,
+      "llamacpp:n_decode_total": 1658.0,
+      "llamacpp:requests_processing": 0.0,
+      "llamacpp:requests_deferred": 0.0
+    },
+    "metrics_delta": {
+      "llamacpp:prompt_tokens_total": 378.0,
+      "llamacpp:tokens_predicted_total": 415.0,
+      "llamacpp:n_decode_total": 419.0,
+      "llamacpp:requests_processing": 0.0,
+      "llamacpp:requests_deferred": 0.0
+    },
+    "server_health": "ok",
+    "models_endpoint_ok": true,
+    "slot_contexts": [
+      512,
+      512,
+      512,
+      512
+    ],
+    "corpus": "TOY_DOCS (6 in-memory toy documents)",
+    "pipeline_source_sha256": "b917826455cfb98e2a7797d1738b01b07133f0630171c7fe7c5c87c31584ce4d",
+    "system_prompt": "You are a model-serving tutor. Answer using only the provided context. If the context does not contain the answer, say so plainly.",
+    "context_budget_evidence": {
+      "server_release_log": [
+        "28.39.274.495 I slot      release: id  3 | task 1550 | stop processing: n_tokens = 340, truncated = 0",
+        "28.51.149.328 I slot      release: id  3 | task 1743 | stop processing: n_tokens = 260, truncated = 0",
+        "29.02.589.911 I slot      release: id  3 | task 1860 | stop processing: n_tokens = 254, truncated = 0"
+      ],
+      "final_slot_token_counts": [
+        340,
+        260,
+        254
+      ],
+      "slot_capacity": 512,
+      "truncated": false
+    },
+    "n16_n19_status": {
+      "N16": "stub: localhost; no cloud/IaC deployment called",
+      "N17": "stub: static in-memory corpus; no ingestion pipeline called",
+      "N18": "stub: toy Python list; no lakehouse/SQLite called",
+      "N19": "stub: keyword-overlap scoring; no embedding/vector index/feature store called",
+      "N20": "real: local llama-server HTTP API"
+    },
+    "server_mean_ms": {
+      "prefill": 469.82766666666663,
+      "decode": 10925.965333333334,
+      "client_llm_minus_server_timings": 2714.7070000000003
+    }
+  }
+}

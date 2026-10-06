@@ -1,0 +1,21 @@
+
+────────────────────────────────────────────────────────────────
+  Smoke test against http://localhost:8080
+────────────────────────────────────────────────────────────────
+  /metrics before : tokens_predicted_total = 0
+
+==> POST http://localhost:8080/v1/chat/completions
+
+Goodput@SLO represents the specific performance metric of the Goodput service, which measures the throughput achieved by the service over a given time period.
+
+  server timings: prompt 37 tok in 1155 ms  ->  32.0 tok/s prefill
+                  decode 31 tok in 2389 ms  ->  12.6 tok/s
+
+==> GET http://localhost:8080/metrics   (rubric item 7 -- screenshot this)
+   llamacpp:tokens_predicted_total                   31.00   (+31)
+   llamacpp:prompt_tokens_total                      37.00   (+37)
+   llamacpp:n_decode_total                           33.00   (+33)
+   llamacpp:requests_processing                       0.00
+   llamacpp:n_busy_slots_per_decode                   1.00   (+1)
+
+OK -- served a completion and tokens_predicted_total is 31 (non-zero).

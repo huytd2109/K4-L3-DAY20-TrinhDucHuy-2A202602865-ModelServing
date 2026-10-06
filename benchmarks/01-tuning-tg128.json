@@ -1,0 +1,132 @@
+{
+  "metric": "tg128",
+  "cores": {
+    "physical": 8,
+    "logical": 16
+  },
+  "rows": [
+    {
+      "threads": 1,
+      "tok_s": 18.71
+    },
+    {
+      "threads": 4,
+      "tok_s": 31.74
+    },
+    {
+      "threads": 8,
+      "tok_s": 39.01
+    },
+    {
+      "threads": 16,
+      "tok_s": 29.65
+    },
+    {
+      "threads": 32,
+      "tok_s": 20.26
+    }
+  ],
+  "best": {
+    "threads": 8,
+    "tok_s": 39.01
+  },
+  "run_context": {
+    "date_local": "2026-10-06T12:47:40.476275+07:00",
+    "entrypoint": "labs/01-measure/tune.py (same script as .\\lab.ps1 tune)",
+    "environment": {
+      "LAB_N_GPU_LAYERS": "0"
+    },
+    "reason": "CPU thread-count sweep; do not compare directly with CUDA CP1",
+    "reps": 2,
+    "model": "models\\Qwen3.5-0.8B-Q4_K_M.gguf",
+    "llama_cpp_build": "b10488",
+    "ngl": 0
+  },
+  "raw_runs": [
+    {
+      "args": [
+        "-m",
+        "D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\models\\Qwen3.5-0.8B-Q4_K_M.gguf",
+        "-t",
+        "1",
+        "-ngl",
+        "0",
+        "-p",
+        "0",
+        "-n",
+        "128",
+        "-r",
+        "2"
+      ],
+      "output": "| model                          |       size |     params | backend    | ngl | threads |            test |                  t/s |\n| ------------------------------ | ---------: | ---------: | ---------- | --: | ------: | --------------: | -------------------: |\n| qwen35 0.8B Q4_K - Medium      | 497.39 MiB |   752.39 M | CUDA       |   0 |       1 |           tg128 |         18.71 \u00b1 2.30 |\n\nbuild: 9d77fa172 (10488)\nggml_cuda_init: found 1 CUDA devices (Total VRAM: 4095 MiB):\n  Device 0: NVIDIA GeForce RTX 3050 Ti Laptop GPU, compute capability 8.6, VMM: yes, VRAM: 4095 MiB\nload_backend: loaded CUDA backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cuda.dll\nload_backend: loaded RPC backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-rpc.dll\nload_backend: loaded CPU backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cpu-haswell.dll\n"
+    },
+    {
+      "args": [
+        "-m",
+        "D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\models\\Qwen3.5-0.8B-Q4_K_M.gguf",
+        "-t",
+        "4",
+        "-ngl",
+        "0",
+        "-p",
+        "0",
+        "-n",
+        "128",
+        "-r",
+        "2"
+      ],
+      "output": "| model                          |       size |     params | backend    | ngl | threads |            test |                  t/s |\n| ------------------------------ | ---------: | ---------: | ---------- | --: | ------: | --------------: | -------------------: |\n| qwen35 0.8B Q4_K - Medium      | 497.39 MiB |   752.39 M | CUDA       |   0 |       4 |           tg128 |         31.74 \u00b1 1.67 |\n\nbuild: 9d77fa172 (10488)\nggml_cuda_init: found 1 CUDA devices (Total VRAM: 4095 MiB):\n  Device 0: NVIDIA GeForce RTX 3050 Ti Laptop GPU, compute capability 8.6, VMM: yes, VRAM: 4095 MiB\nload_backend: loaded CUDA backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cuda.dll\nload_backend: loaded RPC backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-rpc.dll\nload_backend: loaded CPU backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cpu-haswell.dll\n"
+    },
+    {
+      "args": [
+        "-m",
+        "D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\models\\Qwen3.5-0.8B-Q4_K_M.gguf",
+        "-t",
+        "8",
+        "-ngl",
+        "0",
+        "-p",
+        "0",
+        "-n",
+        "128",
+        "-r",
+        "2"
+      ],
+      "output": "| model                          |       size |     params | backend    | ngl |            test |                  t/s |\n| ------------------------------ | ---------: | ---------: | ---------- | --: | --------------: | -------------------: |\n| qwen35 0.8B Q4_K - Medium      | 497.39 MiB |   752.39 M | CUDA       |   0 |           tg128 |         39.01 \u00b1 0.43 |\n\nbuild: 9d77fa172 (10488)\nggml_cuda_init: found 1 CUDA devices (Total VRAM: 4095 MiB):\n  Device 0: NVIDIA GeForce RTX 3050 Ti Laptop GPU, compute capability 8.6, VMM: yes, VRAM: 4095 MiB\nload_backend: loaded CUDA backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cuda.dll\nload_backend: loaded RPC backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-rpc.dll\nload_backend: loaded CPU backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cpu-haswell.dll\n"
+    },
+    {
+      "args": [
+        "-m",
+        "D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\models\\Qwen3.5-0.8B-Q4_K_M.gguf",
+        "-t",
+        "16",
+        "-ngl",
+        "0",
+        "-p",
+        "0",
+        "-n",
+        "128",
+        "-r",
+        "2"
+      ],
+      "output": "| model                          |       size |     params | backend    | ngl | threads |            test |                  t/s |\n| ------------------------------ | ---------: | ---------: | ---------- | --: | ------: | --------------: | -------------------: |\n| qwen35 0.8B Q4_K - Medium      | 497.39 MiB |   752.39 M | CUDA       |   0 |      16 |           tg128 |         29.65 \u00b1 1.40 |\n\nbuild: 9d77fa172 (10488)\nggml_cuda_init: found 1 CUDA devices (Total VRAM: 4095 MiB):\n  Device 0: NVIDIA GeForce RTX 3050 Ti Laptop GPU, compute capability 8.6, VMM: yes, VRAM: 4095 MiB\nload_backend: loaded CUDA backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cuda.dll\nload_backend: loaded RPC backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-rpc.dll\nload_backend: loaded CPU backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cpu-haswell.dll\n"
+    },
+    {
+      "args": [
+        "-m",
+        "D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\models\\Qwen3.5-0.8B-Q4_K_M.gguf",
+        "-t",
+        "32",
+        "-ngl",
+        "0",
+        "-p",
+        "0",
+        "-n",
+        "128",
+        "-r",
+        "2"
+      ],
+      "output": "| model                          |       size |     params | backend    | ngl | threads |            test |                  t/s |\n| ------------------------------ | ---------: | ---------: | ---------- | --: | ------: | --------------: | -------------------: |\n| qwen35 0.8B Q4_K - Medium      | 497.39 MiB |   752.39 M | CUDA       |   0 |      32 |           tg128 |         20.26 \u00b1 0.37 |\n\nbuild: 9d77fa172 (10488)\nggml_cuda_init: found 1 CUDA devices (Total VRAM: 4095 MiB):\n  Device 0: NVIDIA GeForce RTX 3050 Ti Laptop GPU, compute capability 8.6, VMM: yes, VRAM: 4095 MiB\nload_backend: loaded CUDA backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cuda.dll\nload_backend: loaded RPC backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-rpc.dll\nload_backend: loaded CPU backend from D:\\aiinaction\\K4-L3-DAY20-TrinhDucHuy-2A202602865-ModelServing\\runtime\\b10488\\ggml-cpu-haswell.dll\n"
+    }
+  ]
+}
